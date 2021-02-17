@@ -4,6 +4,7 @@ class Connect4 {
         this.ROWS = 6;      // 6 Rows for our grid
         this.COLS = 7;      // 7 Columns for the grid
         this.selector = selector;
+        this.player = 'red';
         this.createGrid();      // Will create a grid every time constructor is called
         this.setUpEventListener();
     }
@@ -27,9 +28,10 @@ class Connect4 {
         }
     }
 
-    // When we will hover over our grid, it will show the last empty column
+    // Set our listeners to work with the grid.
     setUpEventListener() {
         const $board = $(this.selector);
+        const that = this;          // To keep reference to the original object. Access to the original 'this' attribute.
 
         // To find an empty cell in the given column.
         function findLastEmptyCell(col) {
@@ -50,13 +52,27 @@ class Connect4 {
         $board.on('mouseenter', '.col.empty', function() {
             const col = $(this).data('col');
             const $lastEmptyCell = findLastEmptyCell(col);
-            $lastEmptyCell.addClass(`next-red`);
+            $lastEmptyCell.addClass(`next-${that.player}`);
 
         })
 
         // When we will leave any column, this will remove the last highlighted cell
         $board.on('mouseleave', '.col', function() {
-            $('.col').removeClass(`next-red`);
+            $('.col').removeClass(`next-${that.player}`);
         })
+
+        // To add the color to the bottom cell of the column clicked
+        $board.on('click', '.col.empty', function() {
+            const col = $(this).data('col');
+            const $lastEmptyCell = findLastEmptyCell(col);
+            $lastEmptyCell.removeClass(`empty next-{that.player}`);
+
+            // Assign turns to the players
+            $lastEmptyCell.addClass(that.player);
+            that.player = (that.player === 'red') ? 'black' : 'red';
+            $(this).trigger('mouseenter');
+        })
+
+
     }
 }
