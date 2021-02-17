@@ -1,0 +1,17 @@
+body {
+    text-align: center;
+}
+
+#connect4 {
+    background-color: orange;
+    display: inline-block;
+}
+
+.col {
+    width: 70px;
+    height: 70px;
+    display: inline-block;
+    background-color: white;
+    margin: 5px;
+    border-radius: 50%;
+}
