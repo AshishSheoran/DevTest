@@ -15,3 +15,7 @@ body {
     margin: 5px;
     border-radius: 50%;
 }
+
+.next-red {
+    background-color: rgba(255, 0, 0, 0.2);
+}
